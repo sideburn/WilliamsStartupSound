@@ -64,8 +64,8 @@
   │           │           │ 4 3 2 1   │
   │3 PB4      │           │ ○ ○ ○ *   │
   │           │           └────────────┘
-  │4 GND ─────┼────────→ GND            Pin 1 = No Connect
-  │           │                         Pin 9 = GND
+  │4 GND ─────┼────────→ GND
+  │           │
   │5 PB0      │
   │           │
   │6 PB1 ─────┼────────→ Pin 2 (Binary Value 1)
@@ -78,6 +78,11 @@
 
 Note: Williams board regulates 11.1V battery to 5V internally.
 ATtiny85 taps this regulated 5V supply.
+
+Williams Connector Pins:
+- Pin 1: No connection (marked with *)
+- Pins 2-8: Sound select inputs
+- Pin 9: Not used (not GND)
 ```
 
 ## Manual Button Interface

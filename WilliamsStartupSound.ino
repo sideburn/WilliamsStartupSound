@@ -28,7 +28,7 @@ const int connectorPin2 = 1;    // PB1 -> Williams connector pin 2 (binary value
 const int connectorPin4 = 2;    // PB2 -> Williams connector pin 4 (binary value 4)
 
 // Timing parameters
-const int bootDelay = 2000;         // Williams board boot time (ms)
+const int bootDelay = 1000;         // Williams board boot time (ms)
 const int triggerDuration = 200;    // How long to hold pins low (ms)
 
 void setup() {
