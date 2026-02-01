@@ -11,7 +11,7 @@ ATtiny85 Pin 7 (PB2) ──→ Williams Pin 4 (Binary 4)
 
 ## Current Configuration
 - **Triggers:** Sound #5 (binary 00101 = 1+4)
-- **Boot delay:** 2000ms (2 seconds)
+- **Boot delay:** 1000ms (1 second)
 - **Trigger duration:** 200ms
 - **Power in sleep:** <10µA (microamps)
 
@@ -49,7 +49,7 @@ Sound # = (Pin2×1) + (Pin3×2) + (Pin4×4) + (Pin5×8) + (Pin7×16)
 
 **No intro sound?**
 - ✓ Check all 4 wire connections
-- ✓ Increase bootDelay to 3000ms
+- ✓ Increase bootDelay to 2000ms
 - ✓ Test Williams board with manual buttons first
 
 **Wrong sound plays?**
@@ -63,12 +63,12 @@ Sound # = (Pin2×1) + (Pin3×2) + (Pin4×4) + (Pin5×8) + (Pin7×16)
 - ✓ Check for shorts
 
 ## Power Consumption
-- **Active:** ~4-8mA for 2.2 seconds
+- **Active:** ~4-8mA for 1.2 seconds
 - **Sleep:** <10µA (basically zero)
 - **Impact:** Negligible on battery life
 
 ## Files in This Repository
-- `williams_intro_trigger.ino` - Main Arduino sketch
+- `WilliamsStartupSound.ino` - Main Arduino sketch
 - `README.md` - Full documentation
 - `CIRCUIT.md` - Circuit diagrams and schematics
 - `QUICK_REFERENCE.md` - This file

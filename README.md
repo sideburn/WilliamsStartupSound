@@ -84,7 +84,7 @@ const int connectorPin4 = 3;    // PB3 -> Pin 4 (value 4)
 ## Timing Parameters
 
 ```cpp
-const int bootDelay = 2000;         // Williams boot time (2 seconds)
+const int bootDelay = 1000;         // Williams boot time (1 second)
 const int triggerDuration = 200;    // Trigger pulse width (200ms)
 ```
 
@@ -119,7 +119,7 @@ If you don't have a dedicated programmer, you can use an Arduino Uno as an ISP p
 
 ## Power Consumption
 
-- **Active (trigger sequence):** ~4-8mA for ~2.2 seconds
+- **Active (trigger sequence):** ~4-8mA for ~1.2 seconds
 - **Sleep mode:** <10µA (microamps)
 - **Total power impact:** Negligible on battery-powered FX box
 
@@ -138,7 +138,7 @@ The ATtiny shares the same input pins but doesn't interfere because it returns t
 ## Troubleshooting
 
 **Intro sound doesn't play:**
-- Increase `bootDelay` to 3000ms or higher
+- Increase `bootDelay` to 2000ms or higher
 - Check all 4 wire connections
 - Verify ATtiny is receiving 5V power
 - Test Williams board with manual buttons first

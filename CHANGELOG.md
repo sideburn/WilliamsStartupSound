@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Initial Release
 - ATtiny85 auto-trigger for Williams D-8224 sound boards
 - Triggers Sound #5 (pins 2+4, binary value 5) on power-up
-- 2 second boot delay for Williams board initialization
+- 1 second boot delay for Williams board initialization (optimized from 2 seconds)
 - 200ms trigger pulse duration
 - Ultra-low power sleep mode after triggering (<10µA)
 - Non-interfering design compatible with manual button controls
@@ -44,6 +44,6 @@ All notable changes to this project will be documented in this file.
 ## Notes
 
 - Current configuration tested with Williams D-8224 from Defender/Stargate
-- Boot delay of 2 seconds works reliably, may vary with different boards
+- Boot delay of 1 second works reliably, may vary with different boards
 - Manual button panel shares input pins without conflict
 - ATtiny draws negligible power in sleep mode - excellent for battery operation
