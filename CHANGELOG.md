@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-02-01
+
+### Added
+- **Full 5-pin support** - Now connects to all Williams sound input pins (2,3,4,5,7)
+- **Automatic sound decoding** - Simply set `introSound` variable (1-31), code handles pin logic
+- **PCB-friendly pin mapping** - Williams pins route directly to matching ATtiny physical pins
+
+### Changed
+- Expanded from 2 pins to all 5 pins for complete sound selection flexibility
+- Simplified sound selection - no manual pin configuration needed
+- Updated all documentation and diagrams for 5-pin configuration
+
+### Technical Details
+- Williams Pin 2 → ATtiny Pin 2 (PB3) - Binary 1
+- Williams Pin 3 → ATtiny Pin 3 (PB4) - Binary 2  
+- Williams Pin 4 → ATtiny Pin 5 (PB0) - Binary 4
+- Williams Pin 5 → ATtiny Pin 6 (PB1) - Binary 8
+- Williams Pin 7 → ATtiny Pin 7 (PB2) - Binary 16
+
 ## [1.0.0] - 2026-02-01
 
 ### Initial Release

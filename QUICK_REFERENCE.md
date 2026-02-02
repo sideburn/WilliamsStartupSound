@@ -1,43 +1,45 @@
 # Quick Reference Card
 
-## Essential Connections (4 wires only!)
+## Essential Connections (7 wires)
 
 ```
 ATtiny85 Pin 8 (VCC) ──→ Williams +5V
 ATtiny85 Pin 4 (GND) ──→ Williams GND
-ATtiny85 Pin 6 (PB1) ──→ Williams Pin 2 (Binary 1)
-ATtiny85 Pin 7 (PB2) ──→ Williams Pin 4 (Binary 4)
+ATtiny85 Pin 2 (PB3) ──→ Williams Pin 2 (Binary 1)
+ATtiny85 Pin 3 (PB4) ──→ Williams Pin 3 (Binary 2)
+ATtiny85 Pin 5 (PB0) ──→ Williams Pin 4 (Binary 4)
+ATtiny85 Pin 6 (PB1) ──→ Williams Pin 5 (Binary 8)
+ATtiny85 Pin 7 (PB2) ──→ Williams Pin 7 (Binary 16)
 ```
 
 ## Current Configuration
-- **Triggers:** Sound #5 (binary 00101 = 1+4)
+- **Triggers:** Sound #5 (default, easily changeable)
 - **Boot delay:** 1000ms (1 second)
 - **Trigger duration:** 200ms
 - **Power in sleep:** <10µA (microamps)
+- **Pin connections:** All 5 Williams sound pins connected (supports any sound 1-31)
 
 ## Changing the Intro Sound
 
-1. Calculate binary value of desired sound (1-31)
-2. Determine which Williams pins to connect
-3. Update pin assignments in code
+1. Open `WilliamsStartupSound.ino`
+2. Find the line: `const int introSound = 5;`
+3. Change the number to your desired sound (1-31)
 4. Reflash ATtiny85
 
-### Sound Selection Formula
-```
-Sound # = (Pin2×1) + (Pin3×2) + (Pin4×4) + (Pin5×8) + (Pin7×16)
-```
+**That's it!** The code automatically calculates which pins to activate.
 
 ## Common Sound Examples
 
-| Sound # | Binary  | Pins Used | ATtiny Config |
-|---------|---------|-----------|---------------|
-| 1       | 00001   | 2         | PB1 → Pin 2   |
-| 3       | 00011   | 2,3       | PB1 → 2, PB2 → 3 |
-| 5       | 00101   | 2,4       | PB1 → 2, PB2 → 4 (CURRENT) |
-| 7       | 00111   | 2,3,4     | PB1 → 2, PB2 → 3, PB3 → 4 |
-| 15      | 01111   | 2,3,4,5   | All 4 low pins |
-| 16      | 10000   | 7         | PB1 → Pin 7   |
-| 31      | 11111   | All       | All 5 pins    |
+Just change `const int introSound = X;` to any of these:
+
+| Sound # | Example Use |
+|---------|-------------|
+| 1       | Single beep |
+| 5       | Default (CURRENT) |
+| 7       | Triple tone |
+| 15      | Complex sound |
+| 16      | Deep bass |
+| 31      | All pins active |
 
 ## Arduino IDE Settings
 - **Board:** ATtiny25/45/85

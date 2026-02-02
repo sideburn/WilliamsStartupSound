@@ -33,8 +33,11 @@
 │         │           │   Logic     │ │  85  │    │Button │   │  │
 │         │           │   (5V)      │ │ (5V) │    │ Panel │   │  │
 │         │           │             │ │      │    │       │   │  │
-│         │           │  PB1 ◄──────┼─┼─Pin 2│    │       │   │  │
-│         │           │  PB2 ◄──────┼─┼─Pin 4│    │       │   │  │
+│         │           │  Pin 2 ◄────┼─┼─PB3  │    │       │   │  │
+│         │           │  Pin 3 ◄────┼─┼─PB4  │    │       │   │  │
+│         │           │  Pin 4 ◄────┼─┼─PB0  │    │       │   │  │
+│         │           │  Pin 5 ◄────┼─┼─PB1  │    │       │   │  │
+│         │           │  Pin 7 ◄────┼─┼─PB2  │    │       │   │  │
 │         │           │             │ └──────┘    │       │   │  │
 │         │           │  Pins 2-7◄──┼─────────────┼─Btns  │   │  │
 │         │           │             │             └───────┘   │  │
@@ -60,17 +63,17 @@
   │           │           ┌────────────┐
   │1 RESET    │           │ 9 8 7 6 5 │
   │           │           │ ○ ○ ○ ○ ○ │
-  │2 PB3      │           │           │
+  │2 PB3 ─────┼────────→ Pin 2 (Binary 1)
   │           │           │ 4 3 2 1   │
-  │3 PB4      │           │ ○ ○ ○ *   │
-  │           │           └────────────┘
-  │4 GND ─────┼────────→ GND
+  │3 PB4 ─────┼────────→ Pin 3 (Binary 2)
+  │           │           │ ○ ○ ○ *   │
+  │4 GND ─────┼────────→ GND            └────────────┘
   │           │
-  │5 PB0      │
+  │5 PB0 ─────┼────────→ Pin 4 (Binary 4)
   │           │
-  │6 PB1 ─────┼────────→ Pin 2 (Binary Value 1)
+  │6 PB1 ─────┼────────→ Pin 5 (Binary 8)
   │           │
-  │7 PB2 ─────┼────────→ Pin 4 (Binary Value 4)
+  │7 PB2 ─────┼────────→ Pin 7 (Binary 16)
   │           │
   │8 VCC ─────┼────────→ Williams +5V (from onboard regulator)
   │           │
@@ -83,6 +86,9 @@ Williams Connector Pins:
 - Pin 1: No connection (marked with *)
 - Pins 2-8: Sound select inputs
 - Pin 9: Not used (not GND)
+
+PCB Design Note: Williams connector pins route directly to matching 
+ATtiny physical pins (2→2, 3→3, 4→5, 5→6, 7→7) for easy layout.
 ```
 
 ## Manual Button Interface

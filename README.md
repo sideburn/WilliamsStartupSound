@@ -39,22 +39,28 @@ The Williams D-8224 uses a 6802 CPU and software-based sound synthesis from ROM,
         ATtiny85
      ┌─────U─────┐
 RESET│1         8│VCC (+5V)
-  PB3│2         7│PB2 → Williams Pin 4
-  PB4│3         6│PB1 → Williams Pin 2
-  GND│4         5│PB0
+  PB3│2         7│PB2 → Williams Pin 7
+  PB4│3         6│PB1 → Williams Pin 5
+  GND│4         5│PB0 → Williams Pin 4
      └───────────┘
+       ↓ ↓           ↓
+   W.Pin2 W.Pin3
 ```
 
 ### Wiring Table
 
-| ATtiny85 Pin | Function | Williams Board Connection |
-|--------------|----------|---------------------------|
-| Pin 8 (VCC)  | Power    | +5V                       |
-| Pin 4 (GND)  | Ground   | GND                       |
-| Pin 6 (PB1)  | Output   | Connector Pin 2 (Binary 1)|
-| Pin 7 (PB2)  | Output   | Connector Pin 4 (Binary 4)|
+| ATtiny85 Pin | Port | Function | Williams Board Connection |
+|--------------|------|----------|---------------------------|
+| Pin 8 (VCC)  | -    | Power    | +5V                       |
+| Pin 4 (GND)  | -    | Ground   | GND                       |
+| Pin 2        | PB3  | Output   | Connector Pin 2 (Binary 1)|
+| Pin 3        | PB4  | Output   | Connector Pin 3 (Binary 2)|
+| Pin 5        | PB0  | Output   | Connector Pin 4 (Binary 4)|
+| Pin 6        | PB1  | Output   | Connector Pin 5 (Binary 8)|
+| Pin 7        | PB2  | Output   | Connector Pin 7 (Binary 16)|
 
 **Current Configuration:** Triggers Sound #5 (binary 00101 = 1+4)
+**Note:** All 5 Williams sound pins are now connected, allowing you to trigger any sound 1-31 by changing the `introSound` variable in the code.
 
 ## Williams D-8224 Sound Selection
 
@@ -72,14 +78,19 @@ Sounds are triggered by pulling the desired combination of pins LOW simultaneous
 
 ### Changing the Intro Sound
 
-To trigger a different sound, modify the pin assignments in the code:
+To trigger a different sound, simply change the `introSound` variable at the top of the code:
 
-**Example - Sound #7 (binary 00111 = 1+2+4):**
 ```cpp
-const int connectorPin2 = 1;    // PB1 -> Pin 2 (value 1)
-const int connectorPin3 = 2;    // PB2 -> Pin 3 (value 2)
-const int connectorPin4 = 3;    // PB3 -> Pin 4 (value 4)
+const int introSound = 7;  // Change this to any sound number 1-31
 ```
+
+**Examples:**
+- Sound #1: `const int introSound = 1;`
+- Sound #7: `const int introSound = 7;`
+- Sound #16: `const int introSound = 16;`
+- Sound #31: `const int introSound = 31;`
+
+The code automatically calculates which Williams pins to activate based on the sound number.
 
 ## Timing Parameters
 
