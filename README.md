@@ -39,12 +39,12 @@ The Williams D-8224 uses a 6802 CPU and software-based sound synthesis from ROM,
         ATtiny85
      ┌─────U─────┐
 RESET│1         8│VCC (+5V)
-  PB3│2         7│PB2 → Williams Pin 7
-  PB4│3         6│PB1 → Williams Pin 5
-  GND│4         5│PB0 → Williams Pin 4
+  PB3│2         7│PB2 → Williams Pin 4
+  PB4│3         6│PB1 → Williams Pin 3
+  GND│4         5│PB0 → Williams Pin 2
      └───────────┘
-       ↓ ↓           ↓
-   W.Pin2 W.Pin3
+       ↓ ↓           
+   W.Pin5 W.Pin7
 ```
 
 ### Wiring Table
@@ -53,14 +53,23 @@ RESET│1         8│VCC (+5V)
 |--------------|------|----------|---------------------------|
 | Pin 8 (VCC)  | -    | Power    | +5V                       |
 | Pin 4 (GND)  | -    | Ground   | GND                       |
-| Pin 2        | PB3  | Output   | Connector Pin 2 (Binary 1)|
-| Pin 3        | PB4  | Output   | Connector Pin 3 (Binary 2)|
-| Pin 5        | PB0  | Output   | Connector Pin 4 (Binary 4)|
-| Pin 6        | PB1  | Output   | Connector Pin 5 (Binary 8)|
-| Pin 7        | PB2  | Output   | Connector Pin 7 (Binary 16)|
+| Pin 5        | PB0  | Output   | Connector Pin 2 (Binary 1)|
+| Pin 6        | PB1  | Output   | Connector Pin 3 (Binary 2)|
+| Pin 7        | PB2  | Output   | Connector Pin 4 (Binary 4)|
+| Pin 2        | PB3  | Output   | Connector Pin 5 (Binary 8)|
+| Pin 3        | PB4  | Output   | Connector Pin 7 (Binary 16)|
 
-**Current Configuration:** Triggers Sound #5 (binary 00101 = 1+4)
-**Note:** All 5 Williams sound pins are now connected, allowing you to trigger any sound 1-31 by changing the `introSound` variable in the code.
+**Current Configuration:** Triggers Sound #31 (binary 11111 = all pins grounded - startup sound)
+
+**Button Panel Connector (6-pin):**
+- Pin 1 (Button 1, value 1)  → PB0 → Williams Pin 2
+- Pin 2 (Button 2, value 2)  → PB1 → Williams Pin 3  
+- Pin 3 (Button 3, value 4)  → PB2 → Williams Pin 4
+- Pin 4 (Button 4, value 8)  → PB3 → Williams Pin 5
+- Pin 5 (Button 5, value 16) → PB4 → Williams Pin 7
+- Pin 6 (FIRE button)        → GND
+
+**Note:** All 5 Williams sound pins are now connected using sequential PB0-PB4 mapping, allowing you to trigger any sound 1-31 by changing the `introSound` variable in the code.
 
 ## Williams D-8224 Sound Selection
 

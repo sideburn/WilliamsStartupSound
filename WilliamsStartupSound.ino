@@ -7,12 +7,12 @@
  * 
  * Target: ATtiny85
  * 
- * Physical Connections (PCB routes Williams pins directly to matching ATtiny pins):
- * - Williams Pin 2 -> ATtiny Physical Pin 2 (PB3) - Binary value 1
- * - Williams Pin 3 -> ATtiny Physical Pin 3 (PB4) - Binary value 2
- * - Williams Pin 4 -> ATtiny Physical Pin 5 (PB0) - Binary value 4
- * - Williams Pin 5 -> ATtiny Physical Pin 6 (PB1) - Binary value 8
- * - Williams Pin 7 -> ATtiny Physical Pin 7 (PB2) - Binary value 16
+ * Physical Connections (PCB routes with sequential PB0-PB4 mapping):
+ * - Williams Pin 2 -> ATtiny Physical Pin 5 (PB0) - Binary value 1
+ * - Williams Pin 3 -> ATtiny Physical Pin 6 (PB1) - Binary value 2
+ * - Williams Pin 4 -> ATtiny Physical Pin 7 (PB2) - Binary value 4
+ * - Williams Pin 5 -> ATtiny Physical Pin 2 (PB3) - Binary value 8
+ * - Williams Pin 7 -> ATtiny Physical Pin 3 (PB4) - Binary value 16
  * - ATtiny VCC (pin 8) -> Williams +5V
  * - ATtiny GND (pin 4) -> Williams GND
  * 
@@ -25,15 +25,16 @@
 #include <avr/power.h>
 
 // ===== SOUND SELECTION - CHANGE THIS TO PICK YOUR INTRO SOUND =====
-const int introSound = 5;  // Sound number 1-31
+const int introSound = 22;  // Sound #31 = startup sound (all pins grounded)
 // ==================================================================
 
 // Pin assignments (Arduino pin numbers correspond to PBx port bits)
-const int williamsPin2 = 3;  // PB3 -> ATtiny physical pin 2 -> Williams pin 2 (binary 1)
-const int williamsPin3 = 4;  // PB4 -> ATtiny physical pin 3 -> Williams pin 3 (binary 2)
-const int williamsPin4 = 0;  // PB0 -> ATtiny physical pin 5 -> Williams pin 4 (binary 4)
-const int williamsPin5 = 1;  // PB1 -> ATtiny physical pin 6 -> Williams pin 5 (binary 8)
-const int williamsPin7 = 2;  // PB2 -> ATtiny physical pin 7 -> Williams pin 7 (binary 16)
+// Sequential mapping: PB0, PB1, PB2, PB3, PB4
+const int williamsPin2 = 0;  // PB0 -> ATtiny physical pin 5 -> Williams pin 2 (binary 1)
+const int williamsPin3 = 1;  // PB1 -> ATtiny physical pin 6 -> Williams pin 3 (binary 2)
+const int williamsPin4 = 2;  // PB2 -> ATtiny physical pin 7 -> Williams pin 4 (binary 4)
+const int williamsPin5 = 3;  // PB3 -> ATtiny physical pin 2 -> Williams pin 5 (binary 8)
+const int williamsPin7 = 4;  // PB4 -> ATtiny physical pin 3 -> Williams pin 7 (binary 16)
 
 // Timing parameters
 const int bootDelay = 1000;         // Williams board boot time (ms)
@@ -55,39 +56,30 @@ void setup() {
   pinMode(williamsPin5, INPUT);
   pinMode(williamsPin7, INPUT);
   
-  // Decode sound number and pull appropriate pins LOW
-  // Williams board has pull-up resistors, so LOW triggers the input
-  if (introSound & 1) {   // Bit 0 = value 1
-    pinMode(williamsPin2, OUTPUT);
-    digitalWrite(williamsPin2, LOW);
-  }
-  if (introSound & 2) {   // Bit 1 = value 2
-    pinMode(williamsPin3, OUTPUT);
-    digitalWrite(williamsPin3, LOW);
-  }
-  if (introSound & 4) {   // Bit 2 = value 4
-    pinMode(williamsPin4, OUTPUT);
-    digitalWrite(williamsPin4, LOW);
-  }
-  if (introSound & 8) {   // Bit 3 = value 8
-    pinMode(williamsPin5, OUTPUT);
-    digitalWrite(williamsPin5, LOW);
-  }
-  if (introSound & 16) {  // Bit 4 = value 16
-    pinMode(williamsPin7, OUTPUT);
-    digitalWrite(williamsPin7, LOW);
-  }
+  // CRITICAL: Set all pins LOW simultaneously using direct port manipulation
+  // Williams board samples all 5 pins at once - they must all be LOW at the same instant!
+  // introSound maps directly to port bits: bit 0=PB0, bit 1=PB1, bit 2=PB2, bit 3=PB3, bit 4=PB4
+  
+  uint8_t pinsToActivate = introSound & 0x1F;  // Mask to 5 bits (0-31)
+  
+  // Set pins as outputs atomically
+  DDRB |= pinsToActivate;
+  
+  // Pull them all LOW atomically (single instruction!)
+  PORTB &= ~pinsToActivate;
   
   // Hold trigger for specified duration
   delay(triggerDuration);
   
-  // Release all pins back to high-impedance input mode
+  // Release all pins back to high-impedance input mode atomically
   // This prevents interference with manual button controls
-  pinMode(williamsPin2, INPUT);
-  pinMode(williamsPin3, INPUT);
-  pinMode(williamsPin4, INPUT);
-  pinMode(williamsPin5, INPUT);
-  pinMode(williamsPin7, INPUT);
+  DDRB &= ~0x1F;  // Set PB0-PB4 as inputs (all 5 pins at once)
+  PORTB &= ~0x1F; // Disable pull-ups on PB0-PB4
+  
+  // PROGRAMMING SAFETY: Wait 5 seconds before sleeping
+  // This gives you a window to reprogram if needed
+  // Comment out this line once you're done testing
+  delay(5000);
   
   // Enter deep sleep mode - job complete!
   // ATtiny will draw microamps in this state

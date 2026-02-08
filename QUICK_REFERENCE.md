@@ -5,15 +5,17 @@
 ```
 ATtiny85 Pin 8 (VCC) ──→ Williams +5V
 ATtiny85 Pin 4 (GND) ──→ Williams GND
-ATtiny85 Pin 2 (PB3) ──→ Williams Pin 2 (Binary 1)
-ATtiny85 Pin 3 (PB4) ──→ Williams Pin 3 (Binary 2)
-ATtiny85 Pin 5 (PB0) ──→ Williams Pin 4 (Binary 4)
-ATtiny85 Pin 6 (PB1) ──→ Williams Pin 5 (Binary 8)
-ATtiny85 Pin 7 (PB2) ──→ Williams Pin 7 (Binary 16)
+ATtiny85 Pin 5 (PB0) ──→ Williams Pin 2 (Binary 1)
+ATtiny85 Pin 6 (PB1) ──→ Williams Pin 3 (Binary 2)
+ATtiny85 Pin 7 (PB2) ──→ Williams Pin 4 (Binary 4)
+ATtiny85 Pin 2 (PB3) ──→ Williams Pin 5 (Binary 8)
+ATtiny85 Pin 3 (PB4) ──→ Williams Pin 7 (Binary 16)
 ```
 
+**Sequential PB0-PB4 mapping for easy button panel routing!**
+
 ## Current Configuration
-- **Triggers:** Sound #5 (default, easily changeable)
+- **Triggers:** Sound #31 (startup sound - all pins grounded)
 - **Boot delay:** 1000ms (1 second)
 - **Trigger duration:** 200ms
 - **Power in sleep:** <10µA (microamps)
@@ -35,11 +37,11 @@ Just change `const int introSound = X;` to any of these:
 | Sound # | Example Use |
 |---------|-------------|
 | 1       | Single beep |
-| 5       | Default (CURRENT) |
+| 5       | Simple tone |
 | 7       | Triple tone |
 | 15      | Complex sound |
 | 16      | Deep bass |
-| 31      | All pins active |
+| 31      | Startup sound - all pins active (CURRENT) |
 
 ## Arduino IDE Settings
 - **Board:** ATtiny25/45/85

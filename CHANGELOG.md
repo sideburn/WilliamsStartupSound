@@ -2,24 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0] - 2026-02-01
+## [1.2.0] - 2026-02-07
+
+### Changed
+- **Cleaner sequential pin mapping** - PB0, PB1, PB2, PB3, PB4 in order
+- Updated button connector to 6 pins (5 buttons + GND for FIRE button)
+- Simplified PCB routing with logical button-to-pin correspondence
+
+### Technical Details - New Mapping
+- Button Pin 1 → PB0 (ATtiny pin 5) → Williams Pin 2 (Binary 1)
+- Button Pin 2 → PB1 (ATtiny pin 6) → Williams Pin 3 (Binary 2)
+- Button Pin 3 → PB2 (ATtiny pin 7) → Williams Pin 4 (Binary 4)
+- Button Pin 4 → PB3 (ATtiny pin 2) → Williams Pin 5 (Binary 8)
+- Button Pin 5 → PB4 (ATtiny pin 3) → Williams Pin 7 (Binary 16)
+- Button Pin 6 → GND (for FIRE button)
+
+## [1.1.0] - 2026-02-07
 
 ### Added
 - **Full 5-pin support** - Now connects to all Williams sound input pins (2,3,4,5,7)
 - **Automatic sound decoding** - Simply set `introSound` variable (1-31), code handles pin logic
-- **PCB-friendly pin mapping** - Williams pins route directly to matching ATtiny physical pins
+- **Button panel connector** - 6-pin connector (5 buttons + GND for FIRE button)
+- **PCB-friendly sequential mapping** - PB0-PB4 maps cleanly to button panel pins 1-5
 
 ### Changed
-- Expanded from 2 pins to all 5 pins for complete sound selection flexibility
+- **Default sound changed to #31** - Discovered this is the Williams startup sound (all pins grounded)
+- **Sequential pin mapping** for cleaner PCB routing and intuitive button panel connection
 - Simplified sound selection - no manual pin configuration needed
-- Updated all documentation and diagrams for 5-pin configuration
+- Updated all documentation and diagrams for new pin mapping
 
 ### Technical Details
-- Williams Pin 2 → ATtiny Pin 2 (PB3) - Binary 1
-- Williams Pin 3 → ATtiny Pin 3 (PB4) - Binary 2  
-- Williams Pin 4 → ATtiny Pin 5 (PB0) - Binary 4
-- Williams Pin 5 → ATtiny Pin 6 (PB1) - Binary 8
-- Williams Pin 7 → ATtiny Pin 7 (PB2) - Binary 16
+Pin Mapping (Sequential PB0-PB4):
+- Williams Pin 2 → ATtiny Pin 5 (PB0) - Binary 1  → Button Panel Pin 1
+- Williams Pin 3 → ATtiny Pin 6 (PB1) - Binary 2  → Button Panel Pin 2
+- Williams Pin 4 → ATtiny Pin 7 (PB2) - Binary 4  → Button Panel Pin 3
+- Williams Pin 5 → ATtiny Pin 2 (PB3) - Binary 8  → Button Panel Pin 4
+- Williams Pin 7 → ATtiny Pin 3 (PB4) - Binary 16 → Button Panel Pin 5
+- GND → Button Panel Pin 6 (for FIRE button)
+
+Sound #31 (binary 11111) grounds all 5 pins for authentic Williams startup sound
 
 ## [1.0.0] - 2026-02-01
 
